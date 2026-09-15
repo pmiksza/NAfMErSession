@@ -1,0 +1,44 @@
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+# NAFMErSESSION
+
+<!-- badges: start -->
+
+<!-- badges: end -->
+
+The goal of NAfMErSession is to familiarize music education researchers
+with basic characteristics of using R.
+
+## Installation
+
+You can install the development version of NAfMErSession like so:
+
+``` r
+
+# Please run each line, one-by-one, and if R "asks you" if it can do something
+# during the process of installation and loading of the packages, click "yes"
+# For example: it may ask you to "compile" a package from several servers and
+# you can say "yes" to that.
+
+# Step 1 install the "learn" package
+install.packages("learnr")
+
+# Step 2 install the "devtools" package
+install.packages("devtools")
+
+# Step 3 load the "devtools" library
+library(devtools)
+
+# Step 4 install the package that has our tutorial in it from the web and
+# if you are asked to restart R or install and load additional packages
+# please input the selection/number or "all" or say "yes" as you are directed
+install_github("pmiksza/NAfMErSession")
+
+# Step 4 load the necessary libraries and then run the actual tutorial
+library(learnr)
+library(NAFMErSESSION)
+run_tutorial("NAFMErSESSION", "NAfMErSession")
+```
+
+## 

@@ -1,0 +1,20 @@
+Package: NAFMErSESSION
+Title: Reproducible Quantitative Research for Music Education With R
+Version: 0.0.0.9000
+Authors@R: 
+    person("Peter", "Miksza", , "pmiksza@iu.edu", role = c("aut", "cre"))
+Description: This package houses the tutorial materials for a session on using R at the 2026 NAfME conference.
+License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
+    license
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 8.1.0
+Imports: learnr,
+         QuantPsyc,
+         tidyverse,
+         knitr,
+         rstatix,
+         emmeans
+Depends: 
+    R (>= 3.5)
+LazyData: true
