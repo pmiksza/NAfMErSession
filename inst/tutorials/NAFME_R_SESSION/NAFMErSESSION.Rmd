@@ -10,7 +10,7 @@ editor_options:
 
 ```{r setup, include=FALSE}
 library(learnr)
-library(NAfMErSession)
+library(NAFMErSESSION)
 library(QuantPsyc)
 library(tidyverse)
 library(knitr)
