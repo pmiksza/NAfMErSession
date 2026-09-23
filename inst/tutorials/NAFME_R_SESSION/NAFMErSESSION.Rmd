@@ -47,8 +47,8 @@ programs to use "offline" here:
 
 ### *R Projects*
 
-Using **R Projects** in R Studio will help you get started and help with
-file management (e.g., scripts, data) because an R Project automatically
+Using **R Projects** in R Studio will help you get started with file
+management (e.g., scripts, data) because an R Project automatically
 groups all of your files in a single folder/directory.
 
 Setting one up involves the following navigation:
@@ -58,10 +58,17 @@ Setting one up involves the following navigation:
   a new folder on your computer) or an "Existing Directory" (i.e., a
   folder that already exists on your computer)
 
-The lower right panel of R Studio shows the directory address you
+The *lower right panel* of R Studio shows the directory address you
 created (or chose) for your R Project and all of the files in that
-directory. You should save any data files you need for your analyses in
-the same directory.
+directory. You should save any data and script files you need for your
+analyses in the same directory.
+
+- Other R Studio Panels: The *upper left panel* is where script files
+  appear, the *upper right panel* defaults to the "Environment" tab
+  where you will see any objects currently in R's working memory (the
+  other tabs become useful when integrating R studio with online
+  resources), and the *lower left panel* is the console, where the code
+  you run is executed and where any output will appear.
 
 If you don't work from an R Project, you will have to manage the
 directory designations for your files manually ... and that can cause
@@ -94,7 +101,7 @@ symbol. You can then call the named object or perform operations with
 it. See the following examples in the code below:
 
 ```{r assign_variables, exercise = TRUE, exercise.eval = FALSE}
-# The lines showing the assignments of numbers to x and y will not result in any 
+# The lines showing the assignments of number values to x and y will not result in any 
 # output. However, R will have stored the values under those designated assignments
 # in the R Environment.
 x <- 4
@@ -124,30 +131,31 @@ The four common names for levels of measurement (nominal, ordinal,
 interval, ratio) are not the terms used in R. R distinguishes between
 variable types using the following terminology:
 
-- Numeric: continuous quantitative values (10.5, 55.3, 787.0)
-- Integer: discrete quantitative values with no decimal values (1, 55,
+- **Numeric**: continuous quantitative values (10.5, 55.3, 787.0)
+- **Integer**: discrete quantitative values with no decimal values (1,
+  55,
   100) 
-- Factor: discrete categories with each category called a "level" (an
-  analog to a nominal variable) ("cat", "dog", "fish")
-- Ordered factor: discrete categories that are ordered (analogous to an
-  ordinal variable) ("never", "sometimes", "always")
-- Character: letters with no additional information attached ("k", "R is
-  exciting", "FALSE") (referred to as "string" in SPSS)
-- Logical: TRUE or FALSE Boolean values
-- Complex: for the use of imaginary numbers, indicated by "i"
+- **Factor**: discrete categories with each category called a "level"
+  (an analog to a nominal variable) ("cat", "dog", "fish")
+- **Ordered factor**: discrete categories that are ordered (analogous to
+  an ordinal variable) ("never", "sometimes", "always")
+- **Character**: letters with no additional information attached ("k",
+  "R is exciting", "FALSE") (referred to as "string" in SPSS)
+- **Logical**: TRUE or FALSE Boolean values
+- **Complex**: for the use of imaginary numbers, indicated by "i"
 
 ### *Vectors*
 
 You can also assign a collection of values, i.e., a **vector** of
-values, to an object using the **concatenate** function `c()`. The
+values, to an object using the **concatenate** function, `c()`. The
 following code shows the storage of variables of three different data
 types: *numeric*, *integer*, and *character*. Note that you will have to
 separate values with commas and use parentheses when including
 characters.
 
 R will do a pretty good job at guessing what type of data the values in
-each variable represent when the values are numbers, but it may not do
-what you expect.
+each variable represent when the values are numbers, but it may not
+always do what you expect.
 
 ```{r assign_vectors, exercise = TRUE, exercise.eval = FALSE}
 # As with the code above, the lines showing the assignments of vectors to each 
@@ -158,7 +166,7 @@ integer_variable <- c(4, 8, 15, 16, 23, 42, 12, 34, 78, 2)
 character_variable <- c("who", "what", "when", "who", "what", "when", "who", 
                         "what",  "who", "what")
 
-# Calling the name of each of the vectors will produce output.
+# Calling each vector by name will produce output.
 numeric_variable
 integer_variable
 character_variable
@@ -173,7 +181,7 @@ type). See the following as an example:
 numeric_variable <- c(1.2, 3.7, 5, 2.2, 4.69, 6.123, 10.1, 4.3, 5.5, 6.09)
 integer_variable <- c(4, 8, 15, 16, 23, 42, 12, 34, 78, 2)
 
-# Then perform vector-based operations
+# Then perform vector-based operations.
 numeric_variable/2
 integer_variable*2
 ```
@@ -196,7 +204,7 @@ character_variable <- c("who", "what", "when", "who", "what", "when", "who",
 # columns (i.e., variables) and 10 rows (i.e., entries).
 my_data <- data.frame(numeric_variable, integer_variable, character_variable)
 
-# Calling the "my_data" object shows the entire dataset
+# Calling the "my_data" object shows the entire dataset.
 my_data
 ```
 
@@ -213,8 +221,7 @@ integer_variable <- c(4, 8, 15, 16, 23, 42, 12, 34, 78, 2)
 character_variable <- c("who", "what", "when", "who", "what", "when", "who", 
                         "what",  "who", "what")
 
-# Then you can bind them together into a dataset called "my_data" with three 
-# columns (i.e., variables) and 10 rows (i.e., entries).
+# Then you can bind them together into a dataset called "my_data."
 my_data <- data.frame(numeric_variable, integer_variable, character_variable)
 
 head(my_data)
@@ -243,17 +250,16 @@ three variables in the data frame were summarized as "num" (i.e.,
 numeric) or "chr" (i.e., character). R assumed that `integer_variable`
 was a numeric variable type even though none of the values had decimal
 places. It is often necessary to manually tell R what type of data each
-variable represents. For example, we can specify that the
-`integer_variable` is an integer type variable with the `as.integer()`
-function and that the `character_variable` is a factor type variable
-with the `as.factor()` function. You can use the `class()` function to
-identify the type of data the variable represents (or the "type" of any
-object in R, for that matter).
+variable represents. For example, we can specify the `integer_variable`
+as integer type with the `as.integer()` function and the
+`character_variable` as factor type with the `as.factor()` function. You
+can use the `class()` function to identify the type of data the variable
+represents (or the "type" of any object in R, for that matter).
 
 We can replace the original variable in the dataframe with the new one
 by using an object assignment approach. Alternatively, we could ask for
-R to create a new variable in the dataframe to represent the newly
-specified variable while retaining the original. For example:
+R to create a new variable in the dataframe by assigning it a new name
+within the dataframe. For example:
 
 ```{r view_dataframe_specify, exercise = TRUE, exercise.eval = FALSE}
 # Again, these first lines are just creating the dataframe for this example.
