@@ -296,29 +296,29 @@ object.
 
 The elements that are put inside the parentheses of a function are
 called **arguments**, which are specifications for options regarding how
-a given function is used. There are at least three easy way to learn
+a given function is used. There are at least three easy ways to learn
 about the specific arguments possible for each function:
 
-- Calling the name of the function preceded by a `?`, such as
-  `?function.name()`
-- Looking up the function's description in package documentation on the
-  official Comprehensive R Network website
-  ([CRAN](https://cran.r-project.org/web/packages/available_packages_by_date.html))
-- Searching the "function name" and "R" on the web and looking for the
-  many, many ways individual users have explained how to use the
-  function (the R community of users is extremely generous and helpful
-  when it comes to learning how to use R)
+1.  Calling the name of the function preceded by a `?`, such as
+    `?function.name()`
+2.  Looking up the function's description in package documentation on
+    the official Comprehensive R Network website
+    ([CRAN](https://cran.r-project.org/web/packages/available_packages_by_date.html))
+3.  Searching the "function name" and "R" on the web and looking for the
+    many, many ways individual users have explained how to use the
+    function (the R community of users is extremely generous and helpful
+    when it comes to learning how to use R)
 
 All functions come with default settings for its arguments and although
 in most cases those settings will be exactly what you need, you will
 eventually need to adjust certain arguments to avoid errors in your
 code. For example, you can calculate the arithmetic mean of a variable
 using the `mean()` function available in the base setup of R. Assuming
-you have no missing data in your variable, calling `mean(variable)` will
-work just fine. However, if there are missing values, then the function
-will report an error. That's because the `mean()` function has three
-arguments and one of them assumes that there are no missing values in
-the object you are using it on (see [mean
+you have no missing data in your variable, calling `mean(data$variable)`
+will work just fine. However, if there are missing values, then the
+function will report an error. That's because the `mean()` function has
+three arguments and one of them assumes that there are no missing values
+in the object you are using it on (see [mean
 documentation](https://rdrr.io/r/base/mean.html)).
 
 The arguments for `mean()` are:
@@ -337,9 +337,9 @@ function with a variable that has missing values (i.e., "NA's"), you
 would have to specify that by setting `mean(variable, na.rm = TRUE)`.
 Otherwise, you will get an error when trying to use the function.
 
-Even very experienced R users do not remember all of the various options
-that are possible for the various arguments within functions. Calling
-help on any function `?function.name()` to review the specific argument
+Even very experienced R users do not remember all of the options that
+are possible for arguments within functions. Calling help on any
+function `?function.name()` to review the specific argument
 possibilities available is a common activity for most users. Searching
 for examples of how to use functions online, either on pages of official
 documentation or otherwise, is also extremely common!
@@ -351,42 +351,38 @@ and typing.
 
 ## *Installing and Loading Packages*
 
-You can easily expand the functionality of R by installing and using
+Key to the functionality of R is the ability to install and use
 extension packages made by developers within the open-source R
 community. For beginner R users, this can be somewhat confusing since
 the combination of base functions with the possibilities of functions
 from additional packages can offer many ways for conducting any given
 procedure in R. Often, however, additional packages can make procedures
-in R more user-friendly. Packages that are available for download and
+in R more user-friendly than the would otherwise be if you relied on
+base R functions alone. Packages that are available for download and
 installation are documented on the [R
 Website](https://cran.r-project.org/).
 
-Here is an example of downloading a package and loading it for use in R.
-The
-[`rstatix`](https://cran.r-project.org/web/packages/rstatix/index.html)
-package was designed by Alboukadel Kassambara to make some of the most
-common statistical analyses that social scientists use simple to execute
-in R.
-
 Using the base R `install.packages()` function will signal to R to find
 the package online, download it, and install it for use in your R
-system. For the **rstatix** packages, that would look like this:
-`install.packages("rstatix")`.
-
-You also need to "load" a package once in each R session to use the
+system. That would look like this: `install.packages(package_name)`. You
+also need to "load" a package once in each R session to use the
 functions within it — you can use the `library()` function to do that.
 That makes all of the functions within a package available to you.
-Loading the **rstatix** packages would look like this:
-`library(rstatix)`.
+Loading a package would look like this: `library(package_name)`.
 
 As an example of the convenience and functionality that packages can
-offer, consider that it is possible to calculate descriptive statistics
-for a given variable in R using base functions such as: `mean()`,
-`sd()`, `range()`, `min()`, `max()`, `median()`, and so on. But, there
-are more convenient ways to get all of those summary statistics with
-other packages. For example, both the **rstatix** package and the
-**psych** package contain a single function for returning all of those
-summary values.
+offer, consider the
+[`rstatix`](https://cran.r-project.org/web/packages/rstatix/index.html)
+package, which was designed by Alboukadel Kassambara to make some of the
+most common statistical analyses that social scientists use simple to
+execute in R.
+
+It is possible to calculate descriptive statistics for a given variable
+in R using base functions such as: `mean()`, `sd()`, `range()`, `min()`,
+`max()`, `median()`, and so on. But, there are more convenient ways to
+get all of those summary statistics with other packages. For example,
+both the **`rstatix`** package and the **`psych`** package contain a
+single function for returning all of those summary values.
 
 Here is an example of calculating descriptive statistics summary with
 base R functions vs. the `get_summary_stats()` function from the
@@ -408,7 +404,7 @@ min(my_data$numeric_variable)
 max(my_data$numeric_variable)
 median(my_data$numeric_variable)
 
-# First "load" the package
+# First "load" the package.
 library(rstatix)
 
 # Then use the "get_summary_stats()" function to get a variety of summary statistics.
@@ -417,16 +413,16 @@ get_summary_stats(my_data, numeric_variable)
 
 ### *Tidyverse*
 
-The [**tidyverse**](https://www.tidyverse.org/) refers to a suite of 8
+The [**`tidyverse`**](https://www.tidyverse.org/) refers to a suite of 8
 packages created by a number of developers led by Hadley Wickham that
 are designed to provide more intuitive methods for conducting various
 data science tasks in R. Some tidyverse packages we will use include
-**ggplot2**: a graphing package, **dplyr**: a data manipulation package,
-and **readr** as well as **haven**: packages for importing data.
-Installing and loading **tidyverse** will set you up with all of the 8
-packages at once.
+**`ggplot2`**: a graphing package, **`dplyr`**: a data manipulation
+package, and **`readr`** as well as **`haven`**: packages for importing
+data. Installing and loading **`tidyverse`** will set you up with all of
+the 8 packages at once.
 
-The **rstatix** package demonstrated above is designed to work
+The **`rstatix`** package demonstrated above is designed to work
 seamlessly with other packages in the tidyverse as well.
 
 ## Importing and Viewing Various Types of Data Files
@@ -437,21 +433,21 @@ Excel, there is not a direct data editor.
 
 Four common types of data files you are likely to encounter include:
 
-- CSV Files (XXX.csv): "Comma-separated-value" data that can be created
-  in a variety of programs
-- Excel Files (XXX.xlsx): Files create in Excel
-- SPSS Files (XXX.sav): Data editor files created in SPSS (which can
+- **CSV Files (XXX.csv)**: "Comma-separated-value" data that can be
+  created in a variety of programs
+- **Excel Files (XXX.xlsx)**: Files create in Excel
+- **SPSS Files (XXX.sav)**: Data editor files created in SPSS (which can
   contain a good deal of meta-data, e.g., variable names, value labels,
   and so on)
-- Stata Files (XXX.dta): Data files created in Stata (which can also
+- **Stata Files (XXX.dta)**: Data files created in Stata (which can also
   contain meta-data)
 
-The [**readr**](https://readr.tidyverse.org/) package includes a
+The [**`readr`**](https://readr.tidyverse.org/) package includes a
 function for importing csv files: `read_csv()`. The
-[**readxl**](https://readxl.tidyverse.org/) package has a function for
+[**`readxl`**](https://readxl.tidyverse.org/) package has a function for
 important Excel files: `read_xls()`. The
-[**haven**](https://haven.tidyverse.org/) package includes functions for
-importing SPSS files: `read_sav()`, and Stata files: `read_dta()`.
+[**`haven`**](https://haven.tidyverse.org/) package includes functions
+for importing SPSS files: `read_sav()`, and Stata files: `read_dta()`.
 
 Functions for reading in different types of data files have many
 arguments for telling R how to interpret the file. We won't deal with
@@ -470,7 +466,7 @@ Education*](https://www.amazon.com/Design-Analysis-Quantitative-Research-Educati
 into this tutorial program was too hard for me to figure out how to do.]
 
 ```{r import_data, eval = FALSE}
-# First we will load the packages with the necessary importing functions
+# First we will load the packages with the necessary importing functions.
 library(readr)
 library(haven)
 
@@ -488,22 +484,26 @@ str(data_csv)
 ## Selecting, Filtering, and Altering Variables within Dataframes
 
 In this section, we will use the `select()`, `filter()`, and `mutate()`
-functions from the **dplyr** package.
+functions from the **`dplyr`** package.
 
 Given that these functions are from a package within the tidyverse
 ecosystem, they each can be used with what is referred to as a "pipe
-operator": `%>%`. The pipe operator allows you to write code that can be
-more intuitive to interpret because you can read it linearly, from left
-to righ.
+operator": `%>%`. The use of the pipe operator is a key feature of
+`tidyverse` package function as it allows you to chain bits of code
+together more intuitively than you typically can in base R. The "poipe
+operator" makes reading series of code a linear task from left to right)
+such as: function() %\>% function() %\>% function(), whereas such coding
+in base R is generally done through nested commands such as:
+function(function(function())).
 
-For these exercises, we will use a dataset called `DescriptiveData` with
-four variables meant to represent characteristics of singers in a choir:
-(a) `Age` — a numeric variable (i.e., ratio measure), (b)
-`Years.experience.in.singing.ensemble` - an integer variable (i.e.,
-ratio measure), (c) `Sex` - self-reported biological sex at birth, a
-two-level factor variable (i.e., nominal measure), and (d)
-`Preference.for.rehearsal.frequency` - a five-level ordered factor
-variable (i.e., ordinal measure).
+For these exercises, we will use a dataset with the object name of
+`DescriptiveData`, it has four variables meant to represent
+characteristics of singers in a choir: (a) `Age` — a numeric variable
+(i.e., ratio measure), (b) `Years.experience.in.singing.ensemble` - an
+integer variable (i.e., ratio measure), (c) `Sex` - self-reported
+biological sex at birth, a two-level factor variable (i.e., nominal
+measure), and (d) `Preference.for.rehearsal.frequency` - a five-level
+ordered factor variable (i.e., ordinal measure).
 
 The first six rows of the data are shown below:
 
@@ -543,9 +543,29 @@ another pipe to act upon the filtered data with additional functions, or
 you could create a new dataset from the filtered data assigning the
 entire line of code to a newly named object.
 
+The comparison operators you can use when filtering are as follows:
+
+   `==` Equal to
+
+   `!=` NOT equal to
+
+   `<` Less than
+
+   `>` Greater than
+
+   `<=` Less than OR equal to
+
+   `>=` Greater than OR equal to
+
+And you can combine comparison operators with:
+
+   `|` Or
+
+   `&` And
+
 ```{r filter1, exercise = TRUE, exercise.eval = FALSE}
-# Here is an example of filtering the data so that only those who are 40 years or
-# older remain, and then a call of the count() function to show how many of the 
+# Ths example filters the data so that only those who are 40 years or
+# older remain, and then a call of the count() function shows how many of the 
 # original 115 participants are left in the newly filtered data.
 DescriptiveData %>% filter(Age >= 40) %>% count()
 
@@ -554,15 +574,15 @@ DescriptiveData %>% filter(Age >= 40) %>% count()
 DescriptiveData_Filtered <- DescriptiveData %>% filter(Age >= 40)
 
 # You could use the "head()," "tail()," "glimpse()," or "str()" functions to view
-# the new dataframe titled "DescriptiveData_Filtered." (That's not included here
+# the new dataframe titled "DescriptiveData_Filtered." (not included here
 # for the sake of saving space).
 ```
 
 Here is an example of filtering the data so that only those indicating
-`Sex` as Male are in the newly filtered data - note that quirks in this
-code include that the "equals" operator requires two signs `==`, and
-that when you work with levels of factor variables, they need to be
-presented in quotes, and that the variable names and category labels are
+`Sex` as Male are in the newly filtered data - note three details in
+this code: the "equals" operator requires two signs `==`, that when you
+work with levels of factor variables, they need to be presented in
+quotes, and that the variable names and category labels are
 case-sensitive.
 
 ```{r filter2, exercise = TRUE, exercise.eval = FALSE}
@@ -583,11 +603,11 @@ data:
 
 Once again, we start with the dataframe object then use the pipe `%>%`
 to indicate that we want to pass the data to the following function,
-but, with `mutate()` we need to specify a name for our new variable and
-then a formula for how create the new variable.
+but, with `mutate()` we need to specify a name for our new variable
+followed by a formula for how to create the new variable.
 
 ```{r mutate, exercise = TRUE, exercise.eval = FALSE}
-# The code below creates a new variable named "Age_Months" that is each participants' 
+# This creates a new variable named "Age_Months" that is each participants' 
 # original Age value multiplied by 12, then the "head()" function is called so that
 # you can see that the new variable is appended to the dataframe.
 DescriptiveData %>% mutate(Age_Months = Age*12) %>% head()
