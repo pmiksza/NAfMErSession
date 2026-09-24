@@ -101,7 +101,7 @@ symbol. You can then call the named object or perform operations with
 it. See the following examples in the code below:
 
 ```{r assign_variables, exercise = TRUE, exercise.eval = FALSE}
-# The lines showing the assignments of number values to x and y will not result in any 
+# The code assigning number values to x and y will not result in any 
 # output. However, R will have stored the values under those designated assignments
 # in the R Environment.
 x <- 4
@@ -112,7 +112,7 @@ x
 y
 x + y
 
-# This line will not produce output, it will only store the sum of the information
+# This code will not produce output, it will only store the sum of the information
 # in x and y in "z" in the R Environment.
 z <- (x + y)
 
@@ -158,9 +158,9 @@ each variable represent when the values are numbers, but it may not
 always do what you expect.
 
 ```{r assign_vectors, exercise = TRUE, exercise.eval = FALSE}
-# As with the code above, the lines showing the assignments of vectors to each 
-# name will not result in any output. However, R will have stored the vectors 
-# under those designated assignments.
+# As with the code above, the code assigning vectors to each 
+# name will not result in output. However, R will have stored the vectors 
+# under those names.
 numeric_variable <- c(1.2, 3.7, 5, 2.2, 4.69, 6.123, 10.1, 4.3, 5.5, 6.09)
 integer_variable <- c(4, 8, 15, 16, 23, 42, 12, 34, 78, 2)
 character_variable <- c("who", "what", "when", "who", "what", "when", "who", 
@@ -201,7 +201,7 @@ character_variable <- c("who", "what", "when", "who", "what", "when", "who",
                         "what",  "who", "what")
 
 # Then you can bind them together into a dataset called "my_data" with three 
-# columns (i.e., variables) and 10 rows (i.e., entries).
+# columns (i.e., variables) and 10 rows (i.e., entries/cases).
 my_data <- data.frame(numeric_variable, integer_variable, character_variable)
 
 # Calling the "my_data" object shows the entire dataset.
@@ -224,6 +224,7 @@ character_variable <- c("who", "what", "when", "who", "what", "when", "who",
 # Then you can bind them together into a dataset called "my_data."
 my_data <- data.frame(numeric_variable, integer_variable, character_variable)
 
+# Then view excerpts/summaries of the data.
 head(my_data)
 tail(my_data)
 str(my_data)
@@ -521,7 +522,7 @@ act upon the selected variable - note that you don't need to actually
 write the name of the variable in the final function.
 
 ```{r select, exercise = TRUE, exercise.eval = FALSE}
-# This is an example of selecting the "Age" variable and then identifying the
+# This code selects the "Age" variable and then identifies the
 # minimum age value (i.e., the youngest age).
 DescriptiveData %>% select(Age) %>% min()
 ```
@@ -564,7 +565,7 @@ And you can combine comparison operators with:
    `&` And
 
 ```{r filter1, exercise = TRUE, exercise.eval = FALSE}
-# Ths example filters the data so that only those who are 40 years or
+# This code filters the data so that only those who are 40 years or
 # older remain, and then a call of the count() function shows how many of the 
 # original 115 participants are left in the newly filtered data.
 DescriptiveData %>% filter(Age >= 40) %>% count()
