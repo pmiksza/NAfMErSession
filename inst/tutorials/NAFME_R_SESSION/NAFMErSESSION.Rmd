@@ -827,8 +827,8 @@ The most basic code for a plot would look something like this:
 
 ### *Histogram*
 
-Here is an example of code for creating a histogram that follows the
-generic form described above for the `Age` variable from the example
+Here is an example of creating a histogram that follows the generic form
+described above for the `Age` variable from the example
 `DescriptiveData` dataset.
 
 ```{r histogram, exercise = TRUE, exercise.eval = FALSE, message = FALSE}
@@ -848,17 +848,16 @@ Use the code space below to try and code a histogram for the
 ### *Boxplot*
 
 Creating a boxplot instead is simply a matter of choosing a different
-geom. Here is an example of code for creating a boxplot of the `Age`
-variable. Note that the values on the y axis are not informative and
-refer to the width of the box. You'll see how to remove them in the next
-section of this tutorial.
+geom. Here is an example with the `Age` variable. Note that the values
+on the y axis are not informative and refer to the width of the box.
+You'll see how to remove them in the next section of this tutorial.
 
 ```{r boxplot1, exercise = TRUE, exercise.eval = FALSE}
 ggplot(DescriptiveData, aes(x = Age)) + geom_boxplot()
 ```
 
-You could make it a more typical looking vertically-oriented boxplot by
-assigning the `Age` variable to y instead of x.
+You could make it a more typical looking, vertically-oriented boxplot by
+assigning the `Age` variable to the y axis instead of the x axis.
 
 ```{r boxplot2, exercise = TRUE, exercise.eval = FALSE}
 ggplot(DescriptiveData, aes(y = Age)) + geom_boxplot()
@@ -880,16 +879,14 @@ Creating barplots for nominal (i.e., factor in R) or ordinal variables
 ggplot(DescriptiveData, aes(x = Preference.for.rehearsal.frequency)) + geom_bar()
 ```
 
-Creating "stacked" or "dodged" barplots for two nominal (i.e., factor in
-R) or ordinal variables (i.e., ordered factors in R) would require
-assigning a second variable to `fill = variable_2` in the `aes()`
-function and then specifying an additional argument of
-`position = "stack"` or `position = "dodge"` within the `geom_bar()`
-function.
+Creating "stacked" or "dodged" barplots for two nominal or ordinal
+variables requires assigning a second variable withan argument inside
+the `aes()` function: `fill = variable_2`, and then specifying an
+additional argument of `position = "stack"` or `position = "dodge"`
+within the `geom_bar()` function.
 
 Note that the axis labels are very crowded in this plot. We will look at
-making plot customizations to address issues like that in the next
-section.
+customizing a plot to address issues like that in the next section.
 
 ```{r barchart_dodge, exercise = TRUE, exercise.eval = FALSE, message =FALSE}
 ggplot(DescriptiveData, aes(x = Preference.for.rehearsal.frequency,
@@ -903,18 +900,19 @@ ggplot(DescriptiveData, aes(x = Preference.for.rehearsal.frequency,
 
 Creating scatterplots to depict the relationship between two
 quantitative variables will feel similarly intuitive once you get the
-hang of the grammar of graphics approach. Here is a scatterplot of the
-`Age` and `Years.experience.in.singing.ensemble` variables.
+hang of the grammar of graphics approach, you can use the `geom_point()`
+geom. Here is a scatterplot of the `Age` and
+`Years.experience.in.singing.ensemble` variables.
 
 ```{r scatterplot1, exercise = TRUE, exercise.eval = FALSE, message = FALSE}
 ggplot(DescriptiveData, aes(x = Age,
                             y = Years.experience.in.singing.ensemble)) + geom_point()
 ```
 
-Adding a layer consisting of a line of best fit and the associated
-standard error can be done by adding another layer with `geom_smooth()`
-along with an argument specifying a linear model: \`method = "lm".
-(Clearly this is a very weak/non-existent correlation!)
+Adding a line of best fit and visualizing the associated standard error
+can be done by adding another layer with `geom_smooth()` along with an
+argument specifying a linear model: `method = "lm"`. (Clearly this is a
+very weak/non-existent correlation!)
 
 ```{r scatterplot2, exercise = TRUE, exercise.eval = FALSE, message = FALSE}
 ggplot(DescriptiveData, aes(x = Age,
@@ -925,10 +923,11 @@ ggplot(DescriptiveData, aes(x = Age,
 
 ## A Bit Less Basic Data Visualization with ggplot
 
-In this section, a few of the additional options for customizing plots
-in ggplot2 will be demonstrated. We will use a different dataset that is
-built into this package for these demonstrations since it is larger and
-can allow for few more options. It is titled `InferentialTestData`.
+A few of the additional options for customizing plots in **`ggplot2`**
+will be demonstrated in this section. We will use a different dataset
+that is built into this package for these demonstrations since it is
+larger and can allow for few more options. It is titled
+`InferentialTestData`.
 
 This dataset contains nine variables representing characteristics and
 measurements of school children: (a) `mathtestk` - kindergarten
@@ -953,28 +952,27 @@ The first six rows of the data are shown below:
 head(InferentialTestData) %>% kable(align = "c")
 ```
 
-### *Additional Common Plot Customizations*
+### *Common Plot Customizations*
 
 First, we will consider methods for enacting several very common
-desirable alterations to default plots generated by **ggplot2**. Then,
+desirable alterations to default plots generated by **`ggplot2`**. Then,
 we will create some plots incorporating these methods. Please be aware
-that these tips barely scratch the surface of the customizations
-available in the **ggplot2** package. Fortunately, there are many, many
-terrific online resources for making virtually any sort of alteration
-you'd like.
+that these tips barely scratch the surface of what is possible with
+**`ggplot2`**. Fortunately, there are many, many terrific online
+resources for making virtually any sort of alteration you'd like.
 
 #### *Additional Aesthetic Mappings*
 
 All primary elements of a plot can be customized according to how you
 would like them to appear. For example, within the `aes()` function it
 is possible to specify arguments that control outline and fill colors,
-point size, point shape, line thickness, linetype,degree of
-transparency, geom dimensions, and so on. Various aesthetic mappings
-will be demonstrated in the sample code presented below.
+point size, point shape, line thickness, linetype, degree of
+transparency, and so on. Various aesthetic mappings will be demonstrated
+in the sample code presented below.
 
 #### *Axis Labels*
 
-By default, `ggplot()` will use variable names as axis label and will
+By default, `ggplot()` will use variable names as axis labels and will
 not include any additional title or sub-title information. Adding custom
 labels and titles can be done by adding an additional function to the
 plot code of `+` `labs()` and specifying labels in quotes with arguments
@@ -991,7 +989,7 @@ customize x and y axes in `ggplot()` by adding additional functions such
 specify the range of values to be included by inserting the arguments
 `limits =` into the previous functions, followed by a vector of two
 values representing the desired minimum and maximum, such as, `+`
-`scale_x_continuous(limits = c(1, 100))` - that would create an x axis
+`scale_x_continuous(limits = c(1, 100))` which would create an x axis
 bound by 1 and 100.
 
 If, say, you'd like to customize the axis ticks that are shown between
@@ -1009,18 +1007,18 @@ variables.
 
 #### *Theme Elements*
 
-The general "look" of a plot can be controlled with a number of
-arguments that can be specified within a `+` `theme()` layer. Take a
-look at the online documentation of the various elements that can be
-adjusted within a theme layer: [Theme Element
+The general look of a plot can be controlled with a number of arguments
+that can be specified within a `+` `theme()` layer. Take a look at the
+online documentation of the various elements that can be adjusted within
+a theme layer: [Theme Element
 Options](https://ggplot2.tidyverse.org/reference/theme.html). The
 options are certainly numerous enough that they can be overwhelming when
 getting started.
 
-However, **ggplot2** also has several complete themes that you could use
-which convert many elements of a plot to a particular style. You can see
-some of the options for complete themes at the *tidyverse* website as
-well: [Complete Theme
+However, **`ggplot2`** also has several complete themes that you could
+use which convert many elements of a plot to a particular style in one
+step. You can see some of the options for complete themes at the
+*tidyverse* website as well: [Complete Theme
 Options](https://ggplot2.tidyverse.org/reference/ggtheme.html). The name
 of the the complete theme is typically appended to the `ggplot()`
 function. For example, to use what is referred to as a minimalist style
@@ -1065,11 +1063,11 @@ ggplot(InferentialTestData, aes(y = mathtest1)) + geom_boxplot()
 ```
 
 Here is code for the same boxplot, but this time incorporating the
-features described above with customizations. We will add the
+features described above with further customization. We will add the
 traditional "whiskers" to this version with the additional argument of
-`staplewidth =` within the `geom_boxplot()` function and eliminate the
-nuisance information on the x axis by specifying `breaks = NULL` in the
-`scale_x_continuous()` function.
+`staplewidth =` within the `geom_boxplot()` function. We also eliminate
+the nuisance information on the x axis by specifying `breaks = NULL` in
+the `scale_x_continuous()` function.
 
 ```{r boxplot1Detail2, exercise = TRUE, exercise.eval = FALSE}
 ggplot(InferentialTestData, aes(y = mathtest1)) + 
@@ -1090,9 +1088,9 @@ Use this code space to customize your own boxplot of `mathtest1` scores.
 
 Here is code for a barplot depicting `urbanicity` variable. Note that
 the labels for each bar are taken directly from the factor variable
-levels. You can change those by relabeling the levels of factor variable
-outside of the `ggplot()` function using the `labels =` argument in the
-`factor()` function.
+levels. You can change those by relabeling the levels of a factor
+variable outside of the `ggplot()` function using the `labels =`
+argument in the `factor()` function.
 
 ```{r barchartDetail, exercise = TRUE, exercise.eval = FALSE}
 ggplot(InferentialTestData, aes(x = urbanicity)) + geom_bar()
@@ -1110,10 +1108,10 @@ ggplot(InferentialTestData, aes(x = urbanicity, fill = music)) +
   geom_bar(position = "dodge")
 ```
 
-Here is code for the same barplot with additional customizations. Note
-that with two variables, you can also specify the color scheme with more
-specific code. In this example, the `scale_fill_manual()` function is
-used to adjust the look of the `fill =` aesthetic. You will find similar
+Here is code for the same barplot with additional customization. With
+two variables, you can also specify the color scheme with more specific
+code. In this example, the `scale_fill_manual()` function is used to
+adjust the look of the `fill =` aesthetic. You will find similar
 functions for other aesthetic mappings (`scale_color_manual()`,
 `scale_linetype_manual()`, etc.).
 
@@ -1142,10 +1140,10 @@ ggplot(InferentialTestData, aes(x = mathtestk, y = mathtest1)) +
   geom_point()
 ```
 
-Here is code for the same scatterplot with customizations. Note that the
+Here is code for the same scatterplot with customization. Note that the
 `alpha =` argument is used in the `geom_point()` function to add a
 degree of transparency to the points so that the overplotting (e.g.,
-lots of points in the same general area) is a bit easier to see. Also,
+lots of points in the same general area) is a bit less cumbersome. Also,
 since this is the final example in this section, it demonstrates
 including a variety of arguments that can be used for specific theme
 specifications rather than a complete theme.
@@ -1182,7 +1180,7 @@ We will continue to use the `InferentialTestData` dataset described in
 the previous section for the examples in this section. To keep things
 relatively simple, we will also restrict our analyses to the use of the
 base R linear model function, i.e., `lm()`, and functions available in
-the **rstatix** package described earlier.
+the **`rstatix`** package described earlier.
 
 In addition, all of the functions that will be demonstrated in the
 remaining sections can take a formula as the argument for specifying the
@@ -1219,17 +1217,17 @@ It's worth taking a moment to mention that in addition to base R
 functions, there are many packages that have functions for doing the
 relatively simple analyses presented in the next sections.
 
-Also recall that the **rstatix** package is designed to work well with
-the **tidyverse** suite of packages. As such, we will make frequent use
-of the pipe operator, `%>%` to pass the `InferentialTestData` dataframe
-to various tests functions.
+Also recall that the **`rstatix`** package is designed to work well with
+the **`tidyverse`** suite of packages. As such, we will make frequent
+use of the pipe operator, `%>%` to pass the `InferentialTestData`
+dataframe to various tests functions.
 
 ## Linear Regression Models
 
-Many of the statistical tests arts education researchers wish to use can
-be executed with some generalized form of the **general linear model**.
-For example, correlation, t-tests, ANOVAs, and regression analyses can
-all be conducted with the same function, `lm()`.
+Many statistical goals can be achieved with some generalized form of the
+**general linear model**. For example, the goals of correlation,
+t-tests, ANOVAs, and regression analyses can all be achieved with the
+same function, `lm()`.
 
 The `lm()` function is quite simple to use. It involves specifying an
 argument that is a formula with variable names to indicate dependent and
