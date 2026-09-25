@@ -295,9 +295,8 @@ object (or objects) at once. For example, the `data.frame()`, `head()`,
 `tail()`, and `str()` functions used in the previous section take a
 dataframe object and execute some length of code to describe the
 contents of that dataframe object. In contrast, we used the
-`as.integer()` function above to take a single vector object and execute
-some length of code to coerce a numeric object into an integer class
-object.
+`as.integer()` function to take a single vector object and execute some
+length of code to coerce a numeric object into an integer class object.
 
 The elements that are put inside the parentheses of a function are
 called **arguments**, which are specifications for options regarding how
@@ -369,10 +368,9 @@ community. For beginner R users, this can be somewhat confusing since
 the combination of base functions with the possibilities of functions
 from additional packages can offer many ways for conducting any given
 procedure in R. Often, however, additional packages can make procedures
-in R more user-friendly than the would otherwise be if you relied on
-base R functions alone. Packages that are available for download and
-installation are documented on the [R
-Website](https://cran.r-project.org/).
+in R more user-friendly than if you relied on base R functions alone.
+Packages that are available for download and installation are documented
+on the [R Website](https://cran.r-project.org/).
 
 Using the base R `install.packages()` function will signal to R to find
 the package online, download it, and install it for use in your R
@@ -422,7 +420,7 @@ library(rstatix)
 get_summary_stats(my_data, numeric_variable)
 ```
 
-### *Tidyverse*
+### *A tidyverse Approach to R Coding*
 
 The [**`tidyverse`**](https://www.tidyverse.org/) refers to a suite of 8
 packages created by a number of developers led by Hadley Wickham that
@@ -434,7 +432,7 @@ data. Installing and loading **`tidyverse`** will set you up with all of
 the 8 packages at once.
 
 The **`rstatix`** package demonstrated above is designed to work
-seamlessly with other packages in the tidyverse as well.
+seamlessly with packages in the tidyverse as well.
 
 ## Importing and Viewing Various Types of Data Files
 
@@ -500,12 +498,12 @@ functions from the **`dplyr`** package.
 Given that these functions are from a package within the tidyverse
 ecosystem, they each can be used with what is referred to as a "pipe
 operator": `%>%`. The use of the pipe operator is a key feature of
-`tidyverse` package function as it allows you to chain bits of code
+**`tidyverse`** package function as it allows you to chain bits of code
 together more intuitively than you typically can in base R. The "poipe
 operator" makes reading series of code a linear task from left to right)
 such as: function() %\>% function() %\>% function(), whereas such coding
-in base R is generally done through nested commands such as:
-function(function(function())).
+in base R is generally done through reading inside to outside nested
+commands such as: function(function(function())).
 
 For these exercises, we will use a dataset with the object name of
 `DescriptiveData`, it has four variables meant to represent
@@ -1298,15 +1296,15 @@ InferentialTestData %>% cor_test(mathtest1, mathtestk)
 
 Assuming the variables in a dataframe are appropriately classified
 according to their measurement scale (e.g., numeric, factor, ordered
-factor), then R will interpret them appropriately in the within `lm()`
+factor), then R will interpret them appropriately within the `lm()`
 function. Therefore, using nominal or ordinal predictor variables will
 result in R automatically creating k-1 dummies with the 1st level of the
 factor as the reference category for such variables. There are fairly
 simple ways to change the reference category and the general approach
-for dealing with factor variables within `lm()` using the `relevel()`
-function and setting the `ref =` argument to the name of the factor
-level you would like to be the new reference, but we won't cover those
-here.
+for dealing with factor variables within `lm().` You could use the
+`relevel()` function directly on the variable in the `lm()` formula and
+set the `ref =` argument to the name of the factor level you would like
+to be the new reference.
 
 Here is an example of specifying a linear model that analyzes whether
 participants' kindergarten standardized math test scores varies as a
@@ -1437,7 +1435,9 @@ analysis, in this case generalized eta squared, is returned from this
 function by default.
 
 ```{r anova, exercise = TRUE, exercise.eval = FALSE}
-InferentialTestData %>% anova_test(mathtestk ~ urbanicity)
+# Adding the detailed = TRUE argument will result in a more complete output
+InferentialTestData %>% anova_test(mathtestk ~ urbanicity,
+                                   detailed = TRUE)
 
 ```
 
@@ -1480,7 +1480,8 @@ partitioning the variance across effects. Type 3 sums of squares is a
 default in some commercial statistical packages such as SPSS.)
 
 ```{r anova2way, exercise = TRUE, exercise.eval = FALSE}
-InferentialTestData %>% anova_test(mathtest1 ~ music + urbanicity + music:urbanicity, 
+InferentialTestData %>% anova_test(mathtest1 ~ music + urbanicity + music:urbanicity,
+                                   detailed = TRUE,
                                    type = 3)
 
 ```
