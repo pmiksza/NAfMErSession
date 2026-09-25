@@ -189,9 +189,9 @@ integer_variable*2
 ### *Dataframes*
 
 A **dataframe** is R's term for what most would simply call a data set.
-You can create dataframes by assembling vectors of the same length into
-a single object using the `data.frame()` function. An example of doing
-this is provided below.
+You can create dataframes by assembling vectors of any type as long as
+they are the same length into a single object using the `data.frame()`
+function. An example of doing this is provided below.
 
 ```{r assign_dataframe, exercise = TRUE, exercise.eval = FALSE}
 # First, we store the variables under designated assignments.
@@ -233,6 +233,7 @@ str(my_data)
 To view a single variable from a dataframe you will need to use a `$`
 after the name of the dataframe to specify to R that it should search
 there to find the variable. For example: `dataframe_name$variable_name`.
+The `$` is an extraction operator.
 
 ```{r view_dataframe_select, exercise = TRUE, exercise.eval = FALSE}
 # Again, these first lines are just creating the dataframe for this example.
@@ -393,7 +394,7 @@ single function for returning all of those summary values.
 
 Here is an example of calculating descriptive statistics summary with
 base R functions vs. the `get_summary_stats()` function from the
-**rstatix** package:
+**`rstatix`** package:
 
 ```{r base_rstatix, exercise = TRUE, exercise.eval = FALSE}
 # Again, these first lines are just creating the dataframe for this example.
@@ -563,6 +564,8 @@ The comparison operators you can use when filtering are as follows:
    `<=` Less than OR equal to
 
    `>=` Greater than OR equal to
+
+   `!` NOT can be used alone as well
 
 And you can combine comparison operators with:
 
