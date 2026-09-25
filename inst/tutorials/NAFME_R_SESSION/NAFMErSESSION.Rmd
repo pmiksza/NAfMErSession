@@ -1250,7 +1250,7 @@ With two numeric variables, this is essentially the same as conducting a
 Pearson correlation. In fact, calling for the "standardized" regression
 coefficient for this analysis will result in the Pearson coefficient.
 There is a function for standardized regression coefficients in the
-**QuantPsyc** package called `lm.beta()` that can be used for this.
+**`QuantPsyc`** package called `lm.beta()` that can be used for this.
 
 ```{r regression_cor, exercise = TRUE, exercise.eval = FALSE, message = FALSE}
 # First, specify the model and assign it to an object with a name you make up.
@@ -1274,11 +1274,13 @@ plot(kind_1st_mod)
 ```
 
 For illustration purposes, here is code calling the `lm.beta()` function
-from the **QuantPsyc** package on the model to get the standardized
+from the **`QuantPsyc`** package on the model to get the standardized
 coefficient. This is followed by code for the Pearson correlation for
 confirmation of the equivalence.
 
 ```{r regression_cor_stand, exercise = TRUE, exercise.eval = FALSE, message = FALSE}
+library(QuantPsyc)
+
 # Getting the standardized coefficient
 lm.beta(lm(mathtest1 ~ mathtestk, data = InferentialTestData))
 
@@ -1295,8 +1297,10 @@ function. Therefore, using nominal or ordinal predictor variables will
 result in R automatically creating k-1 dummies with the 1st level of the
 factor as the reference category for such variables. There are fairly
 simple ways to change the reference category and the general approach
-for dealing with factor variables within `lm()`, but we won't cover
-those today.
+for dealing with factor variables within `lm()` using the `relevel()`
+function and setting the `ref =` argument to the name of the factor
+level you would like to be the new reference, but we won't cover those
+here.
 
 Here is an example of specifying a linear model that analyzes whether
 participants' kindergarten standardized math test scores varies as a
@@ -1345,7 +1349,7 @@ standardized math test scores.
 # First, specify the model and assign it to an object with a name you make up.
 math1_mult_mod <- lm(mathtest1 ~ music + ses, data = InferentialTestData)
 
-# Next, call "summary()" to get the results.
+# Next, call summary() to get the results.
 summary(math1_mult_mod)
 ```
 
@@ -1371,9 +1375,9 @@ anova(math1_mus_mod, math1_mult_mod)
 
 ### *Comparing Two Independent Samples*
 
-The following code uses the `t_test()` function to compare 1st grade
-standardized math test scores according to whether the participants were
-in music or not.
+The following code uses the `t_test()` function from `rstatix` to
+compare 1st grade standardized math test scores according to whether the
+participants were in music or not.
 
 ```{r independent_t, exercise = TRUE, exercise.eval = FALSE}
 InferentialTestData %>% t_test(mathtest1 ~ music)
@@ -1465,12 +1469,13 @@ participation depends upon students' urbanicity, that is, the
 interaction of `music` and `urbanicity`.
 
 (Also note that the argument `type = 3` was added to this code to
-indicate the analysis should use type 3 sums of squares. Type 3 sums of
-squares is a default in some commercial statistical packages such as
-SPSS.)
+indicate the analysis should use type 3 sums of squares when
+partitioning the variance across effects. Type 3 sums of squares is a
+default in some commercial statistical packages such as SPSS.)
 
 ```{r anova2way, exercise = TRUE, exercise.eval = FALSE}
-InferentialTestData %>% anova_test(mathtest1 ~ music + urbanicity + music:urbanicity, type = 3)
+InferentialTestData %>% anova_test(mathtest1 ~ music + urbanicity + music:urbanicity, 
+                                   type = 3)
 
 ```
 
@@ -1478,7 +1483,7 @@ Further pairwise comparisons of significant effects can be conducted in
 a variety of ways. As one example, it might be desirable to see if
 urbanicity is a significant effect for those who do and those who do not
 participate in music. That can be done by first grouping according to
-music, and then conducting tests of estimated marginal means with **p**
+music, and then conducting tests of estimated marginal means with *p*
 values adjusted for multiple comparisons.
 
 ```{r emmeans, exercise = TRUE, exercise.eval = FALSE}
@@ -1497,7 +1502,7 @@ beyond the scope of this tutorial.
 ### *Assumptions and Non-Parametric Analogs*
 
 Typical tests of assumptions for the tests mentioned above are also
-available in the **rstatix** package and can be called with similar
+available in the **`rstatix`** package and can be called with similar
 code. Here are a few among the options available:
 
 - levene_test()
@@ -1505,7 +1510,7 @@ code. Here are a few among the options available:
 - identify_outliers()
 
 The non-parametric analogs of the t-test and ANOVA for nominal or
-ordinal outcome data are similarly accessible in the **rstatix**
+ordinal outcome data are similarly accessible in the **`rstatix`**
 package. Use the `?function_name()` help call on the tests below to see
 what options are avaialble:
 
