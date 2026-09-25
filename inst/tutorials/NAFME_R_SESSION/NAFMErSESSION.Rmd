@@ -345,6 +345,13 @@ possibilities available is a common activity for most users. Searching
 for examples of how to use functions online, either on pages of official
 documentation or otherwise, is also extremely common!
 
+Last, note that you don't necessarily need to define each argument in a
+function. The function will match what you put within the parentheses to
+an argument according to the order the appear. For example, you could
+specify: `mean(x = variable)` or `mean(variable)`. In the second case,
+the function assumes you want the variable to serve as the `"x"`
+argument since that's what comes first in the function.
+
 You could create your own functions in R fairly easily as well. As you
 gain experience with the programming language, building your own custom
 functions to enact common or repetitive tasks can save you a lot of time
@@ -374,9 +381,8 @@ Loading a package would look like this: `library(package_name)`.
 As an example of the convenience and functionality that packages can
 offer, consider the
 [`rstatix`](https://cran.r-project.org/web/packages/rstatix/index.html)
-package, which was designed by Alboukadel Kassambara to make some of the
-most common statistical analyses that social scientists use simple to
-execute in R.
+package, which was designed to make some of the most common statistical
+analyses that social scientists use simple to execute in R.
 
 It is possible to calculate descriptive statistics for a given variable
 in R using base functions such as: `mean()`, `sd()`, `range()`, `min()`,
@@ -634,23 +640,23 @@ table cell whereas the `proportions()` function will produce cell
 proportions.
 
 ```{r tables1, exercise = TRUE, exercise.eval = FALSE}
-# Since "table()" is a base R function, we will not use the "pipe" as with 
-# functions that work within the tidyverse. Instead, we'll use the dataframe and
+# Since table() is a base R function rather than the tidyverse,
+# we will not use the "pipe." Instead, we'll use the dataframe and
 # dollar sign approach to choose variables to analyze.
 
 # Here is code to create a frequency table of the participants' preferred
 # rehearsal frequency.
 table(DescriptiveData$Preference.for.rehearsal.frequency)
 
-# We can also assign the entire table to an object to make it easier to work
-# with in other functions.
+# We can also assign the entire table to an object to make it easier 
+# to work with in other functions.
 Rehearse_table <- table(DescriptiveData$Preference.for.rehearsal.frequency)
 
 # The proportions function works with table objects.
 proportions(Rehearse_table)
 
-# If the number of decimal places is unwieldy, you can use the base R "round()"
-# function to specify how many places you'd like to see.
+# If the number of decimal places is ever unwieldy, you can use the 
+# base R round() function to specify how many places you'd like to see.
 round(proportions(Rehearse_table), 2)
 ```
 
@@ -658,7 +664,7 @@ Here is an example of a cross-tabulation using the same base R
 functions.
 
 ```{r tables2, exercise = TRUE, exercise.eval = FALSE}
-# Here is code to create a cross-tabulation table of the participants' preferred 
+# Code to cross-tabulate the participants' preferred 
 # rehearsal frequency according to biological sex.
 table(DescriptiveData$Sex, DescriptiveData$Preference.for.rehearsal.frequency)
 
@@ -667,24 +673,25 @@ Bio_Rehearse_Table <- table(DescriptiveData$Sex, DescriptiveData$Preference.for.
 round(proportions(Bio_Rehearse_Table), 2)
 ```
 
-You could also request percentages *by row* by specifying an additional
-argument within the `proportion()` function of `margin = 1` or *by
-column* with `margin = 2`.
+You could also request percentages ***by row*** by specifying an
+additional argument within the `proportion()` function of `margin = 1`
+or ***by column*** with `margin = 2`.
 
 ```{r tables3, exercise = TRUE, exercise.eval = FALSE}
 Bio_Rehearse_Table <- table(DescriptiveData$Sex, DescriptiveData$Preference.for.rehearsal.frequency)
 
+# Row
 round(proportions(Bio_Rehearse_Table, margin = 1), 2)
 
+# Columns
 round(proportions(Bio_Rehearse_Table, margin = 2), 2)
 ```
 
-As mentioned on earlier pages, the **rstatix** package provides many
-functions that make conducting common types of analyses convenient
-within a tidyverse ecosystem. The `freq_table()` function can be used in
-a similar way as the base R `table()` function. The `freq_table()`
-function returns frequency counts and percentages (even the column is
-labeled "prop").
+The **`rstatix`** package provides a convenient function for creating
+tables with tidyverse style code. The `freq_table()` function can be
+used in a similar way as the base R `table()` function. The
+`freq_table()` function returns frequency counts and percentages (even
+though the column is labeled "prop").
 
 ```{r tables_rstatix1, exercise = TRUE, exercise.eval = FALSE}
 # A line of code using a pipe operator can be used for this.
@@ -692,8 +699,8 @@ labeled "prop").
 DescriptiveData %>% freq_table(Preference.for.rehearsal.frequency)
 ```
 
-Here is an example of an **rstatix** cross-tabulation with the
-`freq_table()` function.
+Here is an example of a cross-tabulation with the `freq_table()`
+function.
 
 ```{r tables_rstatix2, exercise = TRUE, exercise.eval = FALSE}
 # A line of code using a pipe operator can be used for this.
@@ -702,26 +709,39 @@ DescriptiveData %>% freq_table(Sex, Preference.for.rehearsal.frequency)
 ```
 
 Examining descriptive statistics of quantitative variables is also a
-fundamental step that all analysts will need to take. Such variables can
-be summarized with the `get_summary_stats()` function from **rstatix**.
+fundamental step that all analysts will need to take. Here is a reminder
+of what you can get with the `get_summary_stats()` function from
+**`rstatix`**, as well as an example of using the `describe()` function
+from the `psych` package for getting a similar descriptive statistics
+profile.
 
 ```{r summary_stat, exercise = TRUE, exercise.eval = FALSE}
 # This code will provide summary statistics for the Age variable.
 
+# rstatix package
 DescriptiveData %>% get_summary_stats(Age)
+
+# psych package
+library(psych)
+describe(DescriptiveData$Age)
 ```
 
 ### *Summary Statistics by Sub-Group*
 
 It is also often necessary to summarize data according to sub-groups.
-The `group_by()` function from the **dplyr** package can be used for
-that type of task.
+The `group_by()` function from the **`dplyr`** package can be used for
+that type of task. ALternatively, the `describeBy()` function from the
+`psych` package can perform similar tasks.
 
 ```{r summary_stat_group, exercise = TRUE, exercise.eval = FALSE}
 # This code will provide summary statistics for the Age variable broken out by
 # participants' reported biological sex
 
+# rstatix
 DescriptiveData %>% group_by(Sex) %>% get_summary_stats(Age, type = "common")
+
+# psych
+describeBy(DescriptiveData$Age, group = DescriptiveData$Sex)
 ```
 
 ### *Correlation*
@@ -729,28 +749,29 @@ DescriptiveData %>% group_by(Sex) %>% get_summary_stats(Age, type = "common")
 Examining bivariate correlations is also a common descriptive analysis
 task. As with all things in R, there are many, many ways to calculate
 correlation coefficients and a variety of packages with correlation
-functions. The **rstatix** package has several useful functions for
+functions. The **`rstatix`** package has several useful functions for
 calculating correlations. An additional element of flexibility in all of
-the rstatix correlation functions is the ability to specify among
+the `rstatix` correlation functions is the ability to specify among
 several common types: Pearson, Spearman, or Kendall.
 
 ```{r correlate1, exercise = TRUE, exercise.eval = FALSE}
-# The "cor_test()" function is quite flexible and intuitive. This code returns
-# a Pearson correlation between Age and Years experience in a singing ensemble.
+# This code returns a Pearson correlation between Age and 
+# Years experience in a singing ensemble.
 
 DescriptiveData %>% cor_test(Age, Years.experience.in.singing.ensemble)
 ```
 
-There is also a useful function in the **rstatix** package for creating
-correlation matrices `cor_mat()`. Since there are only two
+There is also a useful function in the **`rstatix`** package for
+creating correlation matrices `cor_mat()`. Since there are only two
 interval/ratio level variables in this example dataset, it would be
 inappropriate to demonstrate a Pearson correlation matrix of more than
 two variables.
 
 It could also be helpful to be able to examine correlations according to
-sub-groups. This code first filters the `Sex` variable so only those who
-reported their biological sex are considered in the analyses, then it
-will result in the Pearson correlation between `Age` and
+sub-groups. This code combines several of the functions we've discussed.
+First it filters the `Sex` variable so only those who reported their
+biological sex are considered in the analyses, then it will produce the
+Pearson correlation between `Age` and
 `Years.experience.in.singing.ensemble` broken out by participants'
 reported biological `Sex`.
 
@@ -764,28 +785,31 @@ DescriptiveData %>% filter(Sex == "Male" | Sex == "Female") %>%
 R's graphic capabilities are amazing because the options for visualizing
 data are vast. In this section, we will again use the `DescriptiveData`
 example dataframe to demonstrate how to make some of the most common
-types of graphs. We will continue working within the **tidyverse**
-ecosystem and use the extremely flexible package **ggplot2**.
+types of graphs. We will continue working within the **`tidyverse`**
+ecosystem and use the extremely flexible package **`ggplot2`**.
 
 ### *ggplot2*
 
-The "gg" in **ggplot2** stands for the "grammar of graphics," which is a
-reference to a book by Leland Wilkinson about coding programs for data
-visualization. The primary developer of **tidyverse** packages and
-functions, Hadley Wickham, also developed **ggplot2**. The most basic
-elements or "layers" of a plot rendered with **ggplot2** include: (a) a
-dataframe, (b) the designation of "aesthetics" (e.g., the mapping of
-variables to axes and aesthetic features), and (c) a "geom" (e.g., a
-shape for the plot such as histogram, boxplot, barplot, scatterplot, and
-so on).
+The "gg" in **`ggplot2`** stands for the "grammar of graphics," which is
+a reference to a book by Leland Wilkinson about coding programs for data
+visualization. The primary developer of **`tidyverse`** packages and
+functions, Hadley Wickham, also developed **`ggplot2`**. The most basic
+elements or "layers" of a plot rendered with **`ggplot2`** include:
+
+- A ***dataframe***
+
+- The designation of "***aesthetics***" (e.g., the mapping of variables
+  to axes and aesthetic features)
+
+- A "***geom***" (e.g., a shape for the plot such as histogram, boxplot,
+  barplot, scatterplot, and so on).
 
 From there, there are many options for building additional layers to the
-plot and a tremendous amount of flexibility in determining the specific
-look of the features of the plot. When it comes to making beautiful
-plots, there are too many good books and tutorials online that you can
-learn from. For our purposes in this section, we will just make basic
-(albeit ugly) plots. Several options for customizing plots will be
-demonstrated in the next section.
+plot and in determining the specific look of the plot. When it comes to
+making beautiful plots, there are too many good books and tutorials
+online that you can learn from. For our purposes in this section, we
+will just make basic (albeit ugly) plots. Several options for basic plot
+customization are demonstrated in the next section.
 
 The most basic code for a plot would look something like this:
 
@@ -793,13 +817,13 @@ The most basic code for a plot would look something like this:
   - `ggplot(data = your_data)`
 - Next, specify which variables from the dataframe are assigned to which
   axes using the `aes()` function inside of the `ggplot()` function:
-  - `ggplot(data = your_data, aes(x = variable_1))`
+  - `ggplot(data = your_data, aes(x = variable))`
   - (There are many more aesthetic possibilities beyond designating
     axes)
 - Next, choose a "geom" to indicate what type of plot you are aiming to
   make by adding one of the possible options with a plus sign (`+`)
   after the `ggplot()` function:
-  - `ggplot(data = your_data, aes(x = variable_1)) + geom_histogram()`
+  - `ggplot(data = your_data, aes(x = variable)) + geom_histogram()`
 
 ### *Histogram*
 
