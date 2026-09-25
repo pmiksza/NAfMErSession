@@ -43,6 +43,9 @@ programs to use "offline" here:
 4.  The community of users is very helpful and there are abundant
     resources for learning
 
+Here is a site with links to a variety of helpful R-related resources:
+[Pete's R Linktree](https://linktr.ee/petemiksza)
+
 ## Creating an R Project to Organize your Data Analysis Files
 
 ### *R Projects*
