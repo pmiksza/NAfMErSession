@@ -61,10 +61,14 @@ Setting one up involves the following navigation:
   a new folder on your computer) or an "Existing Directory" (i.e., a
   folder that already exists on your computer)
 
+> ![](images/R_Project_Ex.png){width="600"}
+
 The *lower right panel* of R Studio shows the directory address you
 created (or chose) for your R Project and all of the files in that
 directory. You should save any data and script files you need for your
 analyses in the same directory.
+
+> ![](images/Sample%20R%20Project%20with%20Files.png){width="900"}
 
 - Other R Studio Panels: The *upper left panel* is where script files
   appear, the *upper right panel* defaults to the "Environment" tab
@@ -72,6 +76,8 @@ analyses in the same directory.
   other tabs become useful when integrating R studio with online
   resources), and the *lower left panel* is the console, where the code
   you run is executed and where any output will appear.
+
+> ![](images/Sample%20R%20Studio%20Panes.png){width="900"}
 
 If you don't work from an R Project, you will have to manage the
 directory designations for your files manually ... and that can cause
@@ -136,16 +142,15 @@ variable types using the following terminology:
 
 - **Numeric**: continuous quantitative values (10.5, 55.3, 787.0)
 - **Integer**: discrete quantitative values with no decimal values (1,
-  55,
-  100) 
-- **Factor**: discrete categories with each category called a "level"
-  (an analog to a nominal variable) ("cat", "dog", "fish")
-- **Ordered factor**: discrete categories that are ordered (analogous to
-  an ordinal variable) ("never", "sometimes", "always")
+  55, 100)
+- **Factor**: discrete categories with each category called a "level" (a
+  nominal variable) ("cat", "dog", "fish")
+- **Ordered factor**: discrete categories that are ordered (an ordinal
+  variable) ("never", "sometimes", "always")
 - **Character**: letters with no additional information attached ("k",
-  "R is exciting", "FALSE") (referred to as "string" in SPSS)
+  "R is exciting", "Luke Skywalker") (referred to as "string" in SPSS)
 - **Logical**: TRUE or FALSE Boolean values
-- **Complex**: for the use of imaginary numbers, indicated by "i"
+- **Complex**: for imaginary numbers, indicated by "i"
 
 ### *Vectors*
 
@@ -192,8 +197,8 @@ integer_variable*2
 ### *Dataframes*
 
 A **dataframe** is R's term for what most would simply call a data set.
-You can create dataframes by assembling vectors of any type as long as
-they are the same length into a single object using the `data.frame()`
+You can create dataframes by assembling vectors of any type (as long as
+they are the same length) into a single object using the `data.frame()`
 function. An example of doing this is provided below.
 
 ```{r assign_dataframe, exercise = TRUE, exercise.eval = FALSE}
@@ -329,8 +334,7 @@ The arguments for `mean()` are:
 
 - `x` the name of the object to calculate the mean of
 - `trim` an argument that allows you to "trim" a fraction of the values
-  from each end of the range of the variable prior to calculating the
-  mean
+  from each end of the range prior to calculating the mean
 - `na.rm` an argument that specifies whether missing values (labeled as
   "NA's") should be removed prior to calculating the mean or not — which
   can be specified with `na.rm = TRUE` or `na.rm = FALSE`
@@ -497,13 +501,19 @@ functions from the **`dplyr`** package.
 
 Given that these functions are from a package within the tidyverse
 ecosystem, they each can be used with what is referred to as a "pipe
-operator": `%>%`. The use of the pipe operator is a key feature of
-**`tidyverse`** package function as it allows you to chain bits of code
-together more intuitively than you typically can in base R. The "poipe
-operator" makes reading series of code a linear task from left to right)
-such as: function() %\>% function() %\>% function(), whereas such coding
-in base R is generally done through reading inside to outside nested
-commands such as: function(function(function())).
+operator": `%>%`. The use of the pipe operator is a key feature of the
+**`tidyverse`** as it allows you to chain bits of code together more
+intuitively than you typically can in base R.
+
+The "poipe operator" makes reading series of code a linear task from
+left to right) such as:
+
+> `function() %>% function() %>% function()`
+
+Alternatively, such coding in base R is generally done through reading
+inside to outside nested commands such as:
+
+> `function(function(function())).`
 
 For these exercises, we will use a dataset with the object name of
 `DescriptiveData`, it has four variables meant to represent
@@ -573,6 +583,8 @@ And you can combine comparison operators with:
    `|` Or
 
    `&` And
+
+   [*You can also use* `TRUE` *and* `FALSE` *conditional statements.*]
 
 ```{r filter1, exercise = TRUE, exercise.eval = FALSE}
 # This code filters the data so that only those who are 40 years or
@@ -802,32 +814,38 @@ elements or "layers" of a plot rendered with **`ggplot2`** include:
 
 - A ***dataframe***
 
-- The designation of "***aesthetics***" (e.g., the mapping of variables
-  to axes and aesthetic features)
+- The designation of ***aesthetics*** (e.g., the mapping of variables to
+  axes and aesthetic features)
 
-- A "***geom***" (e.g., a shape for the plot such as histogram, boxplot,
+- A ***geom*** (e.g., a shape for the plot such as histogram, boxplot,
   barplot, scatterplot, and so on).
 
-From there, there are many options for building additional layers to the
-plot and in determining the specific look of the plot. When it comes to
-making beautiful plots, there are too many good books and tutorials
-online that you can learn from. For our purposes in this section, we
-will just make basic (albeit ugly) plots. Several options for basic plot
-customization are demonstrated in the next section.
+From there, there are many options for adding layers to the plot and for
+determining its specific look. When it comes to making beautiful plots,
+there are too many good books and tutorials online that you can learn
+from. For our purposes in this section, we will just make basic (albeit
+ugly) plots. Several options for basic plot customization are
+demonstrated in the next section.
 
 The most basic code for a plot would look something like this:
 
-- First call the function `ggplot()` and specify the data source:
+- First call the function `ggplot()` and specify the data source
+  argument:
   - `ggplot(data = your_data)`
 - Next, specify which variables from the dataframe are assigned to which
-  axes using the `aes()` function inside of the `ggplot()` function:
+  axes with arguments within the `aes()` function inside of the
+  `ggplot()` function:
   - `ggplot(data = your_data, aes(x = variable))`
   - (There are many more aesthetic possibilities beyond designating
     axes)
-- Next, choose a "geom" to indicate what type of plot you are aiming to
-  make by adding one of the possible options with a plus sign (`+`)
-  after the `ggplot()` function:
+- Next, choose a geom function to indicate what type of plot you are
+  aiming to make by adding one of the possible options with a plus sign
+  (`+`) after the `ggplot()` function:
   - `ggplot(data = your_data, aes(x = variable)) + geom_histogram()`
+
+[*Note that—despite the fact that* `ggplot2` *is a* `tidyverse`
+*package—the pieces of* `ggplot()` *code (e.g., layers) are tied
+together with plus signs* (`+`) *rather than pipe operators (*`%>%`)*.*]
 
 ### *Histogram*
 
@@ -925,29 +943,27 @@ ggplot(DescriptiveData, aes(x = Age,
   geom_smooth(method = "lm")
 ```
 
-## A Bit Less Basic Data Visualization with ggplot
+## A Bit Less Basic Data Visualization with ggplot2
 
 A few of the additional options for customizing plots in **`ggplot2`**
 will be demonstrated in this section. We will use a different dataset
-that is built into this package for these demonstrations since it is
-larger and can allow for few more options. It is titled
-`InferentialTestData`.
+for these demonstrations since it will allow for a few more options. It
+is titled `InferentialTestData`.
 
 This dataset contains nine variables representing characteristics and
-measurements of school children: (a) `mathtestk` - kindergarten
-students' standardized math test scores, a numeric variable (i.e.,
-interval measure), (b) `mathtest1` - those same students' 1st grade
+measurements of school children: (a) `mathtestk` - kindergarteners'
 standardized math test scores, a numeric variable (i.e., interval
-measure), (c) `urbanicity` - the urbanicity of the students' school
-(i.e., city, suburb, town, rural), a factor variable (i.e., nominal
-measure), (d) `music` - whether they participated in school music class
-(i.e., No Music, Yes Music), a factor variables (i.e., a nominal
-variable), (e) `ses` - a quantitative indiactor of students'
-socioeconomic status, and (f) a set of "dummy" variables that indicate
-"Yes" or "No" for each urbanicity category - factor variables. This
-particular dataset is used to illustrate analyses in "Chapter 10:
-Regression" of the Miksza & Elpus text, [*Design and Analysis for
-Quantitative Research in Music
+measure), (b) `mathtest1` - those same students' 1st grade standardized
+math test scores, a numeric variable (i.e., interval measure), (c)
+`urbanicity` - the urbanicity of the students' school (i.e., city,
+suburb, town, rural), a factor variable (i.e., nominal measure), (d)
+`music` - whether they participated in school music class (i.e., No
+Music, Yes Music), a factor variables (i.e., a nominal variable), (e)
+`ses` - a quantitative indicator of students' socioeconomic status, and
+(f) a set of "dummy" variables that indicate "Yes" or "No" for each
+urbanicity category - factor variables. This particular dataset is used
+to illustrate analyses in "Chapter 10: Regression" of the Miksza & Elpus
+text, [*Design and Analysis for Quantitative Research in Music
 Education*](https://www.amazon.com/Design-Analysis-Quantitative-Research-Education/dp/0199391904).
 
 The first six rows of the data are shown below:
