@@ -1,6 +1,6 @@
 ---
-title: "Reproducible Quantitative Research for Music Education With R"
-subtitle: "2026 Biennial NAfME Music Research and Teacher Education Conference"
+title: "Reproducible Research With R"
+subtitle: "2026 NAfME Conference"
 output: learnr::tutorial
 runtime: shiny_prerendered
 editor_options: 
@@ -1165,11 +1165,13 @@ ggplot(InferentialTestData, aes(x = mathtestk, y = mathtest1)) +
 
 Here is code for the same scatterplot with customization. Note that the
 `alpha =` argument is used in the `geom_point()` function to add a
-degree of transparency to the points so that the overplotting (e.g.,
+degree of transparency to the points so that the over-plotting (e.g.,
 lots of points in the same general area) is a bit less cumbersome. Also,
 since this is the final example in this section, it demonstrates
 including a variety of arguments that can be used for specific theme
-specifications rather than a complete theme.
+specifications rather than a complete theme. The `element_????()` type
+of functions are used to adjust the appearance of non-data components of
+a plot within the `theme()` function.
 
 ```{r scatterplot1Detail2, exercise = TRUE, exercise.eval = FALSE, message = FALSE}
 ggplot(InferentialTestData, aes(x = mathtestk, y = mathtest1)) + 
@@ -1205,6 +1207,11 @@ relatively simple, we will also restrict our analyses to the use of the
 base R linear model function, i.e., `lm()`, and functions available in
 the **`rstatix`** package described earlier.
 
+Also recall that the **`rstatix`** package is designed to work well with
+the **`tidyverse`** suite of packages. As such, we will make frequent
+use of the pipe operator, `%>%` to pass the `InferentialTestData`
+dataframe to various tests functions.
+
 In addition, all of the functions that will be demonstrated in the
 remaining sections can take a formula as the argument for specifying the
 test you would like to conduct. As such, we will begin with a quick
@@ -1234,17 +1241,6 @@ The interaction effect could be added like this:
 
 |   `y ~ x1 + x2 + x1:x2`
 
-### *A quick note about options available in R*
-
-It's worth taking a moment to mention that in addition to base R
-functions, there are many packages that have functions for doing the
-relatively simple analyses presented in the next sections.
-
-Also recall that the **`rstatix`** package is designed to work well with
-the **`tidyverse`** suite of packages. As such, we will make frequent
-use of the pipe operator, `%>%` to pass the `InferentialTestData`
-dataframe to various tests functions.
-
 ## Linear Regression Models
 
 Many statistical goals can be achieved with some generalized form of the
@@ -1252,11 +1248,10 @@ Many statistical goals can be achieved with some generalized form of the
 t-tests, ANOVAs, and regression analyses can all be achieved with the
 same function, `lm()`.
 
-The `lm()` function is quite simple to use. It involves specifying an
-argument that is a formula with variable names to indicate dependent and
-independent variables (e.g., `outcome_var ~ predictor_var`) and then
-specifying an argument indicating the dataframe in which those variables
-can be found (e.g., `data = your_dataframe`).
+The `lm()` function is quite simple to use. It involves specifying
+dependent and independent variables with a formula (e.g.,
+`outcome_var ~ predictor_var`) and an argument indicating the dataframe
+in which those variables can be found (e.g., `data = your_dataframe`).
 
 ### *Simple linear regression*
 
@@ -1272,8 +1267,9 @@ informative results output.
 With two numeric variables, this is essentially the same as conducting a
 Pearson correlation. In fact, calling for the "standardized" regression
 coefficient for this analysis will result in the Pearson coefficient.
-There is a function for standardized regression coefficients in the
-**`QuantPsyc`** package called `lm.beta()` that can be used for this.
+There is a function for standardized regression coefficients,
+`standardize_parameters()`, in the `parameters` package that can be used
+for this.
 
 ```{r regression_cor, exercise = TRUE, exercise.eval = FALSE, message = FALSE}
 # First, specify the model and assign it to an object with a name you make up.
@@ -1296,16 +1292,16 @@ kind_1st_mod <- lm(mathtest1 ~ mathtestk, data = InferentialTestData)
 plot(kind_1st_mod)
 ```
 
-For illustration purposes, here is code calling the `lm.beta()` function
-from the **`QuantPsyc`** package on the model to get the standardized
-coefficient. This is followed by code for the Pearson correlation for
-confirmation of the equivalence.
+For illustration purposes, here is code calling the
+`standardize_parameters()` function from the **`parameters`** package on
+the model to get standardized coefficients. This is followed by code for
+the Pearson correlation for confirmation of the equivalence.
 
 ```{r regression_cor_stand, exercise = TRUE, exercise.eval = FALSE, message = FALSE}
-library(QuantPsyc)
+library(parameters)
 
 # Getting the standardized coefficient
-lm.beta(lm(mathtest1 ~ mathtestk, data = InferentialTestData))
+standardize_parameters(lm(mathtest1 ~ mathtestk, data = InferentialTestData))
 
 # Pearson correlation
 InferentialTestData %>% cor_test(mathtest1, mathtestk)
@@ -1318,12 +1314,11 @@ according to their measurement scale (e.g., numeric, factor, ordered
 factor), then R will interpret them appropriately within the `lm()`
 function. Therefore, using nominal or ordinal predictor variables will
 result in R automatically creating k-1 dummies with the 1st level of the
-factor as the reference category for such variables. There are fairly
-simple ways to change the reference category and the general approach
-for dealing with factor variables within `lm().` You could use the
-`relevel()` function directly on the variable in the `lm()` formula and
-set the `ref =` argument to the name of the factor level you would like
-to be the new reference.
+factor as the reference category for such variables. Changing the
+reference category of a factor variables within `lm()` is simple, you
+could use the `relevel()` function directly on the variable in the
+`lm()` formula and set the `ref =` argument to the name of the factor
+level you would like to be the new reference.
 
 Here is an example of specifying a linear model that analyzes whether
 participants' kindergarten standardized math test scores varies as a
@@ -1331,9 +1326,8 @@ function of the urbanicity of their school. Note that the reference
 category for the k-1 `urbanicity` dummy variables is the "city"
 category.
 
-With an interval/ratio-level outcome variable and a more than 2-category
-nominal predictor variable, this is essentially the same as conducting
-an ANOVA.
+With an interval/ratio-level outcome variable and a nominal predictor
+variable, this is essentially the same as conducting an ANOVA.
 
 ```{r regression_nom, exercise = TRUE, exercise.eval = FALSE, message = FALSE}
 # First, specify the model and assign it to an object with a name you make up.
@@ -1358,11 +1352,10 @@ anova(mathk_urb_mod)
 ### *Multiple linear regression*
 
 Adding multiple predictor variables/covariates or higher order terms
-(e.g., a squared term for quadratic effects) is simply a matter of
-continuing the formula argument with plus signs `+` and additional
-variable names. As mentioned above including interaction terms can be
-done with the `:` symbol between variable names, as in
-`variable1:variable2`.
+(e.g., squared/quadratic effects) is simply a matter of continuing the
+formula argument with plus signs `+` and additional variable names. As
+mentioned above including interaction terms can be done with the `:`
+symbol between variable names, as in `variable1:variable2`.
 
 Here is code for a model that regresses both, whether participants
 participated in music and their socioeconomic status on their 1st grade
