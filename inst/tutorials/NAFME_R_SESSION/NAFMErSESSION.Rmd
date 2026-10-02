@@ -357,7 +357,8 @@ function. The function will match what you put within the parentheses to
 an argument according to the order they appear. For example, you could
 specify: `mean(x = variable)` or `mean(variable)`. In the second case,
 the function assumes you want the variable to serve as the `"x"`
-argument since that's what comes first in the function.
+argument since that's what comes first in the list of possible arguments
+for the function.
 
 You could create your own functions in R fairly easily as well. As you
 gain experience with the programming language, building your own custom
@@ -505,8 +506,8 @@ operator": `%>%`. The use of the pipe operator is a key feature of the
 **`tidyverse`** as it allows you to chain bits of code together more
 intuitively than you typically can in base R.
 
-The "poipe operator" makes reading series of code a linear task from
-left to right) such as:
+The "pipe operator" makes reading series of code a linear task from left
+to right) such as:
 
 > `function() %>% function() %>% function()`
 
